@@ -13,8 +13,8 @@ func mergeArrays(firstInput [][]int, secondInput [][]int) [][]int {
 
     for i < len(firstInput) || j < len(secondInput) {
 
-        updateUnit(first, i, &firstInput)
-        updateUnit(second, j, &secondInput)
+        updateUnit(first, i, firstInput)
+        updateUnit(second, j, secondInput)
 
         if first.ID <= second.ID {
             updateMergedArrays(first, &mergedArrays)
@@ -35,11 +35,11 @@ type Unit struct {
     value int
 }
 
-func updateUnit(unit *Unit, index int, input *[][]int) {
+func updateUnit(unit *Unit, index int, input [][]int) {
 
-    if index < len(*input) {
-        unit.ID = (*input)[index][0]
-        unit.value = (*input)[index][1]
+    if index < len(input) {
+        unit.ID = input[index][0]
+        unit.value = input[index][1]
     } else {
         unit.ID = math.MaxInt
     }
@@ -47,8 +47,8 @@ func updateUnit(unit *Unit, index int, input *[][]int) {
 
 func updateMergedArrays(unit *Unit, mergedArrays *[][]int) {
 
-    if len(*mergedArrays) > 0 && (*mergedArrays)[len(*mergedArrays) - 1][0] == unit.ID {
-        (*mergedArrays)[len(*mergedArrays) - 1][1] += unit.value
+    if len(*mergedArrays) > 0 && (*mergedArrays)[len(*mergedArrays)-1][0] == unit.ID {
+        (*mergedArrays)[len(*mergedArrays)-1][1] += unit.value
     } else {
         *mergedArrays = append((*mergedArrays), []int{unit.ID, unit.value})
     }
